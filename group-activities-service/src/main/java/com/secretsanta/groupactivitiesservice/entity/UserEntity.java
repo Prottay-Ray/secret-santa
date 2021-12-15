@@ -26,5 +26,6 @@ public class UserEntity {
     @ManyToMany(mappedBy = "User")
 
     //for relation with grps
+
     private List<Groups> groups=new ArrayList<>();
 }
