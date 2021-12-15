@@ -20,4 +20,13 @@ public class GroupActivitiesController {
         GroupCreationDTO groupCreationDTO1 = groupActivitiesService.createGroup(userId, groupCreationDTO);
         return new ResponseEntity<>(groupCreationDTO1, HttpStatus.CREATED);
     }
+
+    //Delete a group
+    @DeleteMapping("/group/{groupId}")
+    public ResponseEntity<String> deleteGroup(@PathVariable Long groupId) {
+        return new ResponseEntity<>(groupActivitiesService.deleteGroup(groupId), HttpStatus.OK);
+    }
+
+
+
 }

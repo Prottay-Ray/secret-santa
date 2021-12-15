@@ -4,6 +4,7 @@ import com.secretsanta.groupactivitiesservice.dto.GroupCreationDTO;
 import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
 import com.secretsanta.groupactivitiesservice.entity.UserEntity;
 import com.secretsanta.groupactivitiesservice.exception.GroupNameUnavailableException;
+import com.secretsanta.groupactivitiesservice.exception.GroupNotFoundException;
 import com.secretsanta.groupactivitiesservice.exception.UserDoesNotExistException;
 import com.secretsanta.groupactivitiesservice.repository.GroupRepository;
 import com.secretsanta.groupactivitiesservice.repository.UserEntityRepository;
@@ -71,5 +72,18 @@ public class GroupActivitiesService extends ModelMapper{
 
         return groupCreationDTO;
 
+    }
+
+    public String deleteGroup(Long groupId) {
+
+        Optional<GroupEntity> groupEntity = groupRepository.findById(groupId);
+        if (groupEntity.isEmpty()) throw new GroupNotFoundException("This group does not exist.");
+
+        try {
+            groupRepository.delete(groupEntity.get());
+            return "Group Deleted Successfully!";
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
