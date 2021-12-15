@@ -25,6 +25,9 @@ public class GroupEntity {
     private Double budgetAmount;
     private Date wishlistDeadline;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private List<WishlistItem> wishlist = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
     @JsonIgnore
     private List<UserEntity> users = new ArrayList<>();
@@ -33,9 +36,14 @@ public class GroupEntity {
         return users.add(user);
     }
 
+    public Boolean addWishList(List<WishlistItem> list) {
+        return wishlist.addAll(list);
+    }
+
     public void clearGroupObject() {
 
         users.clear();
+        wishlist.clear();
         groupId = 0l;
         budgetDeadline = wishlistDeadline = null;
         groupTitle = groupName = "";
