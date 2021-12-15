@@ -12,7 +12,7 @@ public class CommunicatorService {
 
     }
 
-    public Boolean isCustomGroupNameAvailable(String customName) {
+    public Boolean isGroupNameAvailable(String customName) {
 
         return false;
 
@@ -20,8 +20,9 @@ public class CommunicatorService {
 
     public Boolean assignGroupName(String groupName) {
 
+        if (isGroupNameAvailable("dfdf"))
         return true;
-
+        return false;
     }
 
 }
