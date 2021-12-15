@@ -16,6 +16,8 @@ import java.util.ArrayList;
     @NoArgsConstructor
     @AllArgsConstructor
     public class UserEntity {
+        
+        @Id
         private String UserName;
         private long UserId;
         @OneToMany(mappedBy="User")
