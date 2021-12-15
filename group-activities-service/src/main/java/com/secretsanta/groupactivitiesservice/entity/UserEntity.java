@@ -5,14 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+    @Entity
     @Getter
     @Setter
     @NoArgsConstructor
@@ -22,15 +19,18 @@ import java.util.List;
         @Id
         private long userId;
         private String UserName;
-        @OneToMany(mappedBy="User")
 
-        //list of wishlist items
+        @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
         private List<WishlistItem> wishlistitem = new ArrayList<>();
 
-        @ManyToMany(mappedBy = "User")
+//        @ManyToMany(mappedBy = "User")
 
         //for relation with grps
 //changed
+        @ManyToMany(fetch = FetchType.LAZY)
         private List<GroupEntity> groups = new ArrayList<>();
+
+        public boolean addGroup(GroupEntity group) {
+            return groups.add(group);
     }
 }
