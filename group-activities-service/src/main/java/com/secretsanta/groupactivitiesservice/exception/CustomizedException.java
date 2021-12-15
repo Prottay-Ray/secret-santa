@@ -19,4 +19,10 @@ public class CustomizedException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(ex, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(GroupNameUnavailableException.class)
+    public final ResponseEntity<Object> handleGroupNameException(Exception e, WebRequest request) {
+        ExceptionDTO ex = new ExceptionDTO(new Date(), e.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(ex, HttpStatus.IM_USED);
+    }
+
 }
