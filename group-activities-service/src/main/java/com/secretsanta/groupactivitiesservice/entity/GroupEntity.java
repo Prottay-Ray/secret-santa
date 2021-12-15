@@ -19,6 +19,7 @@ public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupId;
+    @Column(unique = true)
     private String groupName;
     private String groupTitle;
     private Date budgetDeadline;

@@ -1,6 +1,7 @@
 package com.secretsanta.groupactivitiesservice.controller;
 
 import com.secretsanta.groupactivitiesservice.dto.GroupCreationDTO;
+import com.secretsanta.groupactivitiesservice.dto.JoinGroupDTO;
 import com.secretsanta.groupactivitiesservice.service.GroupActivitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,16 @@ public class GroupActivitiesController {
         return new ResponseEntity<>(groupActivitiesService.deleteGroup(groupId), HttpStatus.OK);
     }
 
+    //User joins a group
+    @PutMapping("/group/join/{userId}")
+    public ResponseEntity<Boolean> joinGroup(@PathVariable Long userId, @RequestBody JoinGroupDTO joinGroupDTO) {
+        return new ResponseEntity<>(groupActivitiesService.joinGroup(userId, joinGroupDTO), HttpStatus.OK);
+    }
 
+    //System assigns santa to every user
+    @GetMapping("/group/assign-santa/{groupId}")
+    public ResponseEntity<Boolean> assignSanta(@PathVariable Long groupId) {
+        return new ResponseEntity<>(groupActivitiesService.assignSanta(groupId), HttpStatus.OK);
+    }
 
 }

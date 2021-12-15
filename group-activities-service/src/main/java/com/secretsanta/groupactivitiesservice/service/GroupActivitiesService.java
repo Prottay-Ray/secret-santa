@@ -1,22 +1,23 @@
 package com.secretsanta.groupactivitiesservice.service;
 
 import com.secretsanta.groupactivitiesservice.dto.GroupCreationDTO;
+import com.secretsanta.groupactivitiesservice.dto.JoinGroupDTO;
 import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
 import com.secretsanta.groupactivitiesservice.entity.UserEntity;
+import com.secretsanta.groupactivitiesservice.entity.WishlistItem;
 import com.secretsanta.groupactivitiesservice.exception.GroupNameUnavailableException;
 import com.secretsanta.groupactivitiesservice.exception.GroupNotFoundException;
 import com.secretsanta.groupactivitiesservice.exception.UserDoesNotExistException;
 import com.secretsanta.groupactivitiesservice.repository.GroupRepository;
 import com.secretsanta.groupactivitiesservice.repository.UserEntityRepository;
+import com.secretsanta.groupactivitiesservice.repository.WishlistItemRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GroupActivitiesService extends ModelMapper{
@@ -31,6 +32,9 @@ public class GroupActivitiesService extends ModelMapper{
     private GroupRepository groupRepository;
 
     @Autowired
+    private WishlistItemRepository wishlistItemRepository;
+
+    @Autowired
     private CommunicatorService communicatorService;
 
     @Autowired
@@ -42,12 +46,21 @@ public class GroupActivitiesService extends ModelMapper{
         return formatter.parse(date);
     }
 
-    public GroupCreationDTO createGroup(Long userId, GroupCreationDTO groupCreationDTO) throws Exception {
+    //Utility function to check if user is valid then return the user
+    public UserEntity checkUser(Long userId) {
 
         Optional<UserEntity> user = userRepository.findById(userId);
 
         // Checking if the userId is valid
         if(user.isEmpty()) throw new UserDoesNotExistException("The user does not exist!");
+
+        return user.get();
+
+    }
+
+    public GroupCreationDTO createGroup(Long userId, GroupCreationDTO groupCreationDTO) throws Exception {
+
+        UserEntity user = checkUser(userId);
 
         // Check if the given group name is available
         if(!communicatorService.isGroupNameAvailable(groupCreationDTO.getGroupName()))
@@ -60,15 +73,15 @@ public class GroupActivitiesService extends ModelMapper{
         modelMapper.map(groupCreationDTO, group);
 
         // Add user to the group and set the deadlines
-        group.addUser(user.get());
+        group.addUser(user);
         group.setBudgetDeadline(toDate(groupCreationDTO.getBudgetDeadline()));
         group.setWishlistDeadline(toDate(groupCreationDTO.getWishlistDeadline()));
 
         groupRepository.save(group);
 
         //Add group to the user
-        user.get().addGroup(group);
-        userRepository.save(user.get());
+        user.addGroup(group);
+        userRepository.save(user);
 
         return groupCreationDTO;
 
@@ -83,7 +96,56 @@ public class GroupActivitiesService extends ModelMapper{
             groupRepository.delete(groupEntity.get());
             return "Group Deleted Successfully!";
         } catch (Exception e) {
-            throw e;
+            return "Group could not be deleted. Some error occured.";
         }
+    }
+
+    public Boolean joinGroup(Long userId, JoinGroupDTO joinGroupDTO) {
+
+        UserEntity user = checkUser(userId);
+
+        group = groupRepository.findGroupEntityByGroupNameEquals(joinGroupDTO.getGroupName());
+
+        if (group == null) throw new GroupNotFoundException("This group does not exist!");
+
+        group.addUser(user);
+        groupRepository.save(group);
+
+        user.addGroup(group);
+        userRepository.save((user));
+
+        return true;
+
+    }
+
+    public Boolean assignSanta(Long groupId) {
+
+        Optional<GroupEntity> groupEntity = groupRepository.findById(groupId);
+        if (groupEntity.isEmpty()) throw new GroupNotFoundException("This group does not exist.");
+
+        //Getting all the wishlist items of a particular group
+        List<WishlistItem> wishlistItems = groupEntity.get().getWishlist();
+
+        //Getting all the users associated with the group
+        List<UserEntity> users = groupEntity.get().getUsers();
+
+        Map<UserEntity, UserEntity> userMap = new HashMap<>();
+
+        int l = users.size();
+
+        int a = (int) (Math.random()*l);
+
+        for (int i = 0; i < l-a; i++) {
+            userMap.put(users.get(i), users.get(i + a));
+        }
+        for (int i = l - a; i < l; i++) {
+            userMap.put(users.get(i), users.get(i - (l - a)));
+        }
+        for (WishlistItem wishlistItem : wishlistItems) {
+            wishlistItem.setSanta(userMap.get(wishlistItem.getUser()));
+        }
+
+        return true;
+
     }
 }
