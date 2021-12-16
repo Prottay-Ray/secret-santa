@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface WishlistItemRepository extends JpaRepository <WishlistItem, Long> {
 
-    List<WishlistItem> findWishlistItemsByGroup_GroupIdEquals(Long groupId);
+//    List<WishlistItem> findWishlistItemsByGroup_GroupIdEquals(Long groupId);
 
-    List<WishlistItem> findWishlistItemsBySantaUserIdEqualsAndGroup_GroupId(Long santaId, Long groupId);
+//    List<WishlistItem> findWishlistItemsBySantaUserIdEqualsAndGroup_GroupId(Long santaId, Long groupId);
 }

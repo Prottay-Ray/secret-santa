@@ -1,6 +1,10 @@
 package com.secretsanta.groupactivitiesservice.dto;
 
+import com.secretsanta.groupactivitiesservice.entity.UserEntity;
 import lombok.*;
+
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -15,4 +19,6 @@ public class GroupDisplayDTO {
     private String budgetDeadline;
     private String wishlistDeadline;
     private Double budgetAmount;
+    private Date dateOfCreation;
+    private List<UserEntity> users;
 }

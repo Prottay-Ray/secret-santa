@@ -2,6 +2,7 @@ package com.secretsanta.groupactivitiesservice;
 
 import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
 import com.secretsanta.groupactivitiesservice.service.CommunicatorService;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,4 +23,7 @@ public class GroupActivitiesServiceApplication {
 	public GroupEntity getGroup() {
 		return new GroupEntity();
 	}
+
+	@Bean
+	public ModelMapper getModelMapper() { return new ModelMapper(); }
 }

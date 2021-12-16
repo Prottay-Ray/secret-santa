@@ -1,6 +1,7 @@
 package com.secretsanta.groupactivitiesservice.controller;
 
 import com.secretsanta.groupactivitiesservice.dto.*;
+import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
 import com.secretsanta.groupactivitiesservice.service.GroupActivitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class GroupActivitiesController {
 
     @Autowired
@@ -16,8 +17,8 @@ public class GroupActivitiesController {
 
     //Create a Group by an user
     @PostMapping("/group/create/{userId}")
-    public ResponseEntity<GroupCreationDTO> createGroup(@PathVariable Long userId, @RequestBody GroupCreationDTO groupCreationDTO) throws Exception {
-        GroupCreationDTO groupCreationDTO1 = groupActivitiesService.createGroup(userId, groupCreationDTO);
+    public ResponseEntity<GroupEntity> createGroup(@PathVariable Long userId, @RequestBody GroupCreationDTO groupCreationDTO) throws Exception {
+        GroupEntity groupCreationDTO1 = groupActivitiesService.createGroup(userId, groupCreationDTO);
         return new ResponseEntity<>(groupCreationDTO1, HttpStatus.CREATED);
     }
 

@@ -25,6 +25,7 @@ public class GroupEntity {
     private Date budgetDeadline;
     private Double budgetAmount;
     private Date wishlistDeadline;
+    private Date dateOfCreation;
 
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     private List<WishlistItem> wishlist = new ArrayList<>();

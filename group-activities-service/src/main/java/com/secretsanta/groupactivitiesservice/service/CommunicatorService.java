@@ -14,15 +14,13 @@ public class CommunicatorService {
 
     public Boolean isGroupNameAvailable(String customName) {
 
-        return false;
+        return true;
 
     }
 
     public Boolean assignGroupName(String groupName) {
 
-        if (isGroupNameAvailable("dfdf"))
         return true;
-        return false;
     }
 
 }

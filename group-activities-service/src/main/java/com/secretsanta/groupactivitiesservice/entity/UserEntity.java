@@ -30,6 +30,11 @@ import java.util.List;
 
         public boolean addGroup(GroupEntity group) {
             return groups.add(group);
-    }
+        }
+
+        public boolean removeGroup(GroupEntity group) {
+            groups.remove(group);
+            return true;
+        }
      //public boolean addWishlist(WishlistDTO wishlist){return wishlistitem.add(wishlist);}
 }
