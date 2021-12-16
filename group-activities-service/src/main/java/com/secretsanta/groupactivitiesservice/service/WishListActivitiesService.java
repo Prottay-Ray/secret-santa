@@ -46,8 +46,8 @@ public class WishListActivitiesService {
     }
 
     public Boolean isGifted(Long userId){
-        Optional<UserEntity> userEntity = userRepository.findById(userId);
-        if(userEntity.get().getWishlistitem().isEmpty()) return true;
+       Optional<WishlistItem> wishListEntity = wishlistItemRepository.findById(userId);
+        if(wishListEntity.get().getIsGifted()) return true;
         return false;
     }
 }
