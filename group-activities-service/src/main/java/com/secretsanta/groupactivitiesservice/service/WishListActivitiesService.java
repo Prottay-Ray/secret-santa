@@ -47,6 +47,7 @@ public class WishListActivitiesService {
 
     public Boolean isGifted(Long userId){
        Optional<WishlistItem> wishListEntity = wishlistItemRepository.findById(userId);
+        if (wishListEntity.isEmpty()) throw new UserDoesNotExistException("This user does not exist.");
         if(wishListEntity.get().getIsGifted()) return true;
         return false;
     }
