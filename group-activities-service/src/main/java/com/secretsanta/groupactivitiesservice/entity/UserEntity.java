@@ -23,14 +23,12 @@ import java.util.List;
         @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
         private List<WishlistItem> wishlistitem = new ArrayList<>();
 
-//        @ManyToMany(mappedBy = "User")
 
-        //for relation with grps
-//changed
         @ManyToMany(fetch = FetchType.LAZY)
         private List<GroupEntity> groups = new ArrayList<>();
 
         public boolean addGroup(GroupEntity group) {
             return groups.add(group);
     }
+     public boolean addWishlist(WishlistItem wishlist){return wishlistitem.add(wishlist);}
 }
