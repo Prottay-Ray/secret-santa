@@ -1,5 +1,6 @@
 package com.secretsanta.groupactivitiesservice.entity;
 
+import com.secretsanta.groupactivitiesservice.dto.WishlistDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +31,5 @@ import java.util.List;
         public boolean addGroup(GroupEntity group) {
             return groups.add(group);
     }
-     public boolean addWishlist(WishlistItem wishlist){return wishlistitem.add(wishlist);}
+     //public boolean addWishlist(WishlistDTO wishlist){return wishlistitem.add(wishlist);}
 }

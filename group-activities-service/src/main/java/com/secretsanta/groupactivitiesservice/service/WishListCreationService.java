@@ -28,7 +28,15 @@ public class WishListCreationService {
 
     @Autowired
     private WishlistItemRepository wishlistItemRepository;
-
+//item1
+    //priorit
+    //name
+    //price
+    //item2
+    //priorit
+    //name
+    //price
+    //owning table date should be saved there
     public WishlistDTO createwishlistforuser(Long userId, List<WishlistDTO> wishlistDTO) {
         Optional<UserEntity> userdetails=userEntityRepository.findById(userId);
 
@@ -36,18 +44,21 @@ public class WishListCreationService {
             throw new UserDoesNotExistException("User doesn't exist");
         }
 
+        for(int i=0;i<wishlistDTO.size();i++){
+            //convert the input dto to entity
+            WishlistItem wl=new WishlistItem();
+            modelMapper.map(wishlistDTO.get(i),wl);
+            //add user to entity
+            wl.setUser(userdetails.get());
+            //save the entity to wishlist repo
 
+            wishlistItemRepository.save(wl);
+        }
 
-
-
-        user.addWishlist((WishlistItem) wishlistDTO);
-        userEntityRepository.save(user);
-
-        WishlistDTO wishlistnewDTO=new WishlistDTO();
-        modelMapper.map(userdetails.get(),wishlistnewDTO);
-        return wishlistnewDTO;
+        WishlistDTO wlDTO=new WishlistDTO();
+        modelMapper.map(userdetails.get(),wlDTO);
+        return wlDTO;
     }
 
-//for creation of wishlist
 
 }
