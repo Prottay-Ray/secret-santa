@@ -7,10 +7,7 @@ import com.secretsanta.groupactivitiesservice.service.WishListCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,10 +16,17 @@ public class WishListCreationController {
     @Autowired
     WishListCreationService wishListCreationService;
 
+    //to make new wishlist and add wishlist to user
     @PostMapping("/group/wishlist/{userId}")
-    public ResponseEntity<WishlistDTO> createwishlistforuser(@PathVariable Long userId,@RequestBody List<WishlistDTO> wishlistDTO){
-        WishlistDTO wishlistcreationforuser=wishListCreationService.createwishlistforuser(userId,wishlistDTO);
-        return new ResponseEntity<>(wishlistcreationforuser, HttpStatus.CREATED);
+    public  boolean createwishlistforuser(@PathVariable Long userId,@RequestBody List<WishlistDTO> wishlistDTO){
+        boolean wishlistcreationforuser=wishListCreationService.createwishlistforuser(userId,wishlistDTO);
+        return wishlistcreationforuser;
     }
 
+    //to see wishlist of the santas child
+    @GetMapping("/group/wishlist/{userId}/{groupId}")
+    public ResponseEntity<WishlistDTO> listsantasees(@PathVariable Long userId,@PathVariable Long groupId){
+        WishlistDTO wishlistDTO=wishListCreationService.listsantasees(userId,groupId);
+        return new ResponseEntity<>(wishlistDTO, HttpStatus.ACCEPTED);
+    }
 }

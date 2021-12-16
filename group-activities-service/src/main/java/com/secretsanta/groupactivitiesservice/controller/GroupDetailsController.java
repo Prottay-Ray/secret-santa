@@ -18,6 +18,7 @@ public class GroupDetailsController {
     @Autowired
     private GroupDetailsService groupDetailsService;
 
+    //to display all the groups details of a user
     @GetMapping("/group/create/{grpId}")
     public ResponseEntity<GroupDisplayDTO> getAllGrpDetails(@PathVariable Long grpId){
         GroupDisplayDTO displaygrp = groupDetailsService.getAllGrpDetails(grpId);

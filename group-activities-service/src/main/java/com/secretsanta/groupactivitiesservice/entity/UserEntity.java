@@ -22,8 +22,7 @@ import java.util.List;
         private String UserName;
 
         @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-        private List<WishlistItem> wishlistitem = new ArrayList<>();
-
+        private List<WishlistItem> wishlist = new ArrayList<>();
 
         @ManyToMany(fetch = FetchType.LAZY)
         private List<GroupEntity> groups = new ArrayList<>();
@@ -31,5 +30,7 @@ import java.util.List;
         public boolean addGroup(GroupEntity group) {
             return groups.add(group);
     }
-     //public boolean addWishlist(WishlistDTO wishlist){return wishlistitem.add(wishlist);}
+        public Boolean addWishList(List<WishlistItem> list) {
+            return wishlist.addAll(list);
+        }
 }
