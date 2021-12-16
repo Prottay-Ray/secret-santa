@@ -25,8 +25,8 @@ public class WishListCreationController {
 
     //to see wishlist of the santas child
     @GetMapping("/group/wishlist/{userId}/{groupId}")
-    public ResponseEntity<WishlistDTO> listsantasees(@PathVariable Long userId,@PathVariable Long groupId){
-        WishlistDTO wishlistDTO=wishListCreationService.listsantasees(userId,groupId);
-        return new ResponseEntity<>(wishlistDTO, HttpStatus.ACCEPTED);
+    public List<WishlistDTO> listsantasees(@PathVariable Long userId,@PathVariable Long groupId){
+        List<WishlistDTO> wishlistDTO=wishListCreationService.listsantasees(userId,groupId);
+        return wishlistDTO;
     }
 }

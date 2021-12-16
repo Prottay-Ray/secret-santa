@@ -64,18 +64,11 @@ public class WishListCreationService {
     }
 
 
-    public WishlistDTO listsantasees(Long userId, Long groupId) {
-        Optional<WishlistItem> wishlistgrp = wishlistItemRepository.findById(groupId);
-
-        if (wishlistgrp.isEmpty()) {
-            throw new GroupNotFoundException("Group doesn't exist");
-        }
-        List<WishlistItem> allitem=new ArrayList<>();
-        if(wishlistgrp.get().getSanta().getUserId()==userId){
-
-            for(int i=0;i<)
-
-        }
+    public List<WishlistDTO> listsantasees(Long santaId, Long groupId) {
+        List<WishlistItem> searchiftwo=wishlistItemRepository.findWishlistItemsBySantaUserIdEqualsAndGroup_GroupId(santaId,groupId);
+        List<WishlistDTO> wlistDTO=new ArrayList<>();
+        modelMapper.map(searchiftwo,wlistDTO);
+        return wlistDTO;
 
     }
 }

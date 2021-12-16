@@ -12,5 +12,5 @@ public interface WishlistItemRepository extends JpaRepository <WishlistItem, Lon
 
 //    List<WishlistItem> findWishlistItemsByGroup_GroupIdEquals(Long groupId);
 
-//    List<WishlistItem> findWishlistItemsBySantaUserIdEqualsAndGroup_GroupId(Long santaId, Long groupId);
+   List<WishlistItem> findWishlistItemsBySantaUserIdEqualsAndGroup_GroupId(Long santaId, Long groupId);
 }
