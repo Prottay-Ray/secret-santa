@@ -25,8 +25,9 @@ public class WishListCreationService {
 
     @Autowired
     private UserEntityRepository userEntityRepository;
-    @Autowired
-    private UserEntity user;
+
+//    @Autowired
+//    private UserEntity user;
 
     @Autowired
     private WishlistItemRepository wishlistItemRepository;

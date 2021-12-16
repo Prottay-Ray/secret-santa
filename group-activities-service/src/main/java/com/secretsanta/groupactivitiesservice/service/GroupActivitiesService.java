@@ -1,7 +1,6 @@
 package com.secretsanta.groupactivitiesservice.service;
 
-import com.secretsanta.groupactivitiesservice.dto.GroupCreationDTO;
-import com.secretsanta.groupactivitiesservice.dto.JoinGroupDTO;
+import com.secretsanta.groupactivitiesservice.dto.*;
 import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
 import com.secretsanta.groupactivitiesservice.entity.UserEntity;
 import com.secretsanta.groupactivitiesservice.entity.WishlistItem;
@@ -12,6 +11,7 @@ import com.secretsanta.groupactivitiesservice.repository.GroupRepository;
 import com.secretsanta.groupactivitiesservice.repository.UserEntityRepository;
 import com.secretsanta.groupactivitiesservice.repository.WishlistItemRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class GroupActivitiesService extends ModelMapper{
+public class GroupActivitiesService{
 
     @Autowired
     private ModelMapper modelMapper;
@@ -37,8 +37,8 @@ public class GroupActivitiesService extends ModelMapper{
     @Autowired
     private CommunicatorService communicatorService;
 
-    @Autowired
-    private GroupEntity group;
+//    @Autowired
+//    private GroupEntity group;
 
     //Utility function to convert Date from String type to Date type
     public Date toDate(String date) throws ParseException {
@@ -58,7 +58,18 @@ public class GroupActivitiesService extends ModelMapper{
 
     }
 
-    public GroupCreationDTO createGroup(Long userId, GroupCreationDTO groupCreationDTO) throws Exception {
+    //Utility function to check if group is valid then return the group
+    public GroupEntity checkGroup(Long groupId) {
+
+        Optional<GroupEntity> groupEntity = groupRepository.findById(groupId);
+
+        if (groupEntity.isEmpty()) throw new GroupNotFoundException("This Group does not exist!");
+
+        return groupEntity.get();
+
+    }
+
+    public GroupEntity createGroup(Long userId, GroupCreationDTO groupCreationDTO) throws Exception {
 
         UserEntity user = checkUser(userId);
 
@@ -67,7 +78,8 @@ public class GroupActivitiesService extends ModelMapper{
             throw new GroupNameUnavailableException("The group name is already taken!");
 
         // Clearing the group object before reuse
-        group.clearGroupObject();
+//        group.clearGroupObject();
+        GroupEntity group = new GroupEntity();
 
         // map the details from dto to group object
         modelMapper.map(groupCreationDTO, group);
@@ -76,14 +88,14 @@ public class GroupActivitiesService extends ModelMapper{
         group.addUser(user);
         group.setBudgetDeadline(toDate(groupCreationDTO.getBudgetDeadline()));
         group.setWishlistDeadline(toDate(groupCreationDTO.getWishlistDeadline()));
-
+        group.setDateOfCreation(new Date());
         groupRepository.save(group);
 
         //Add group to the user
         user.addGroup(group);
         userRepository.save(user);
 
-        return groupCreationDTO;
+        return group;
 
     }
 
@@ -93,16 +105,23 @@ public class GroupActivitiesService extends ModelMapper{
         if (groupEntity.isEmpty()) throw new GroupNotFoundException("This group does not exist.");
 
         try {
+            List<UserEntity> users = groupEntity.get().getUsers();
+            for (UserEntity user :
+                    users) {
+                user.removeGroup(groupEntity.get());
+            }
             groupRepository.delete(groupEntity.get());
             return "Group Deleted Successfully!";
         } catch (Exception e) {
-            return "Group could not be deleted. Some error occured.";
+            return "Group could not be deleted. Some error occured." + e;
         }
     }
 
     public Boolean joinGroup(Long userId, JoinGroupDTO joinGroupDTO) {
 
         UserEntity user = checkUser(userId);
+
+        GroupEntity group;
 
         group = groupRepository.findGroupEntityByGroupNameEquals(joinGroupDTO.getGroupName());
 
@@ -128,12 +147,11 @@ public class GroupActivitiesService extends ModelMapper{
 
         //Getting all the users associated with the group
         List<UserEntity> users = groupEntity.get().getUsers();
-
         Map<UserEntity, UserEntity> userMap = new HashMap<>();
 
         int l = users.size();
 
-        int a = (int) (Math.random()*l);
+        int a = 1 + (int) (Math.random()*(l - 1));
 
         for (int i = 0; i < l-a; i++) {
             userMap.put(users.get(i), users.get(i + a));
@@ -147,5 +165,27 @@ public class GroupActivitiesService extends ModelMapper{
 
         return true;
 
+    }
+
+
+    public GiftReceivedDTO giftBestWay(Long groupId, Long userId) {
+
+        UserEntity user = checkUser(userId);    //The user is the santa
+
+        GroupEntity group = checkGroup(groupId);    //The group of santa
+
+        List<WishlistItem> list = group.getWishlist();
+
+        for (WishlistItem item :
+                list) {
+            if (item.getSanta().equals(user)) {
+                item.setIsGifted(true);
+                wishlistItemRepository.save(item);
+            }
+        }
+        
+        List<WishlistItemDTO> sendList = modelMapper.map(list, new TypeToken<List<WishlistItemDTO>>() {}.getType());
+
+        return new GiftReceivedDTO(user.getUserName(), list.get(0).getUser().getUserName(), sendList);
     }
 }
