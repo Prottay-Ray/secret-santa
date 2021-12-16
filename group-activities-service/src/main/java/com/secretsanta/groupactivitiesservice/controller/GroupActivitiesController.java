@@ -1,7 +1,6 @@
 package com.secretsanta.groupactivitiesservice.controller;
 
-import com.secretsanta.groupactivitiesservice.dto.GroupCreationDTO;
-import com.secretsanta.groupactivitiesservice.dto.JoinGroupDTO;
+import com.secretsanta.groupactivitiesservice.dto.*;
 import com.secretsanta.groupactivitiesservice.service.GroupActivitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +37,12 @@ public class GroupActivitiesController {
     @GetMapping("/group/assign-santa/{groupId}")
     public ResponseEntity<Boolean> assignSanta(@PathVariable Long groupId) {
         return new ResponseEntity<>(groupActivitiesService.assignSanta(groupId), HttpStatus.OK);
+    }
+
+    //Santa gifts the best way within group budget
+    @PutMapping("/group/{groupId}/santa/{santaId}/gift")
+    public ResponseEntity<GiftReceivedDTO> giftBestWay(@PathVariable Long groupId, @PathVariable Long santaId) {
+        return new ResponseEntity<>(groupActivitiesService.giftBestWay(groupId, santaId), HttpStatus.OK);
     }
 
 }

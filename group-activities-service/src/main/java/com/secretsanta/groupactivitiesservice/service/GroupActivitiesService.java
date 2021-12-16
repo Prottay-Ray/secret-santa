@@ -1,7 +1,6 @@
 package com.secretsanta.groupactivitiesservice.service;
 
-import com.secretsanta.groupactivitiesservice.dto.GroupCreationDTO;
-import com.secretsanta.groupactivitiesservice.dto.JoinGroupDTO;
+import com.secretsanta.groupactivitiesservice.dto.*;
 import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
 import com.secretsanta.groupactivitiesservice.entity.UserEntity;
 import com.secretsanta.groupactivitiesservice.entity.WishlistItem;
@@ -12,6 +11,7 @@ import com.secretsanta.groupactivitiesservice.repository.GroupRepository;
 import com.secretsanta.groupactivitiesservice.repository.UserEntityRepository;
 import com.secretsanta.groupactivitiesservice.repository.WishlistItemRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +55,17 @@ public class GroupActivitiesService extends ModelMapper{
         if(user.isEmpty()) throw new UserDoesNotExistException("The user does not exist!");
 
         return user.get();
+
+    }
+
+    //Utility function to check if group is valid then return the group
+    public GroupEntity checkGroup(Long groupId) {
+
+        Optional<GroupEntity> groupEntity = groupRepository.findById(groupId);
+
+        if (groupEntity.isEmpty()) throw new GroupNotFoundException("This Group does not exist!");
+
+        return groupEntity.get();
 
     }
 
@@ -128,12 +139,11 @@ public class GroupActivitiesService extends ModelMapper{
 
         //Getting all the users associated with the group
         List<UserEntity> users = groupEntity.get().getUsers();
-
         Map<UserEntity, UserEntity> userMap = new HashMap<>();
 
         int l = users.size();
 
-        int a = (int) (Math.random()*l);
+        int a = 1 + (int) (Math.random()*(l - 1));
 
         for (int i = 0; i < l-a; i++) {
             userMap.put(users.get(i), users.get(i + a));
@@ -147,5 +157,24 @@ public class GroupActivitiesService extends ModelMapper{
 
         return true;
 
+    }
+
+
+    public GiftReceivedDTO giftBestWay(Long groupId, Long userId) {
+
+        UserEntity user = checkUser(userId);    //The user is the santa
+
+        group = checkGroup(groupId);    //The group of santa
+
+        List<WishlistItem> list = wishlistItemRepository.findWishlistItemsBySantaUserIdEqualsAndGroup_GroupId(userId, groupId);
+
+        for (WishlistItem item :
+                list) {
+            item.setIsGifted(true);
+        }
+        
+        List<WishlistItemDTO> sendList = modelMapper.map(list, new TypeToken<List<WishlistItemDTO>>() {}.getType());
+
+        return new GiftReceivedDTO(user.getUserName(), list.get(0).getUser().getUserName(), sendList);
     }
 }

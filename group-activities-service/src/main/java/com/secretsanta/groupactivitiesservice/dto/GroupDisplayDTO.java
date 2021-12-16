@@ -9,9 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 
 public class GroupDisplayDTO {
-    private Long groupId;
+//    private Long groupId;
     private String groupName;
-  //  private String groupTitle;
+    private String groupTitle;
     private String budgetDeadline;
     private String wishlistDeadline;
     private Double budgetAmount;

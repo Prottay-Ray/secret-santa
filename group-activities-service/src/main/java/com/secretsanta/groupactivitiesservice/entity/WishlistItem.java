@@ -18,6 +18,7 @@ public class WishlistItem {
     private Long wishListId;
     private String itemsName;
     private double itemsPrice;
+    private Boolean isGifted;
     private int Priority;
 
     @ManyToOne
