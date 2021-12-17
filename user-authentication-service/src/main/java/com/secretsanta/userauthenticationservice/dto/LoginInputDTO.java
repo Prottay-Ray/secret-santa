@@ -12,8 +12,7 @@ import javax.persistence.Column;
 
 public class LoginInputDTO {
 
-    private Long Phone;
-
-    private String Email;
-    private String UserName;
+    private Long phone;
+    private String email;
+    private String userName;
 }

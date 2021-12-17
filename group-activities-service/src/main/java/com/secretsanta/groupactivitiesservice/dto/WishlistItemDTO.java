@@ -11,6 +11,6 @@ public class WishlistItemDTO {
 
     private String itemsName;
     private Double itemsPrice;
-    private Integer Priority;
+    private Integer priority;
 
 }

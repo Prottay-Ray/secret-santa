@@ -8,6 +8,7 @@ import com.secretsanta.userauthenticationservice.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Optional;
 
@@ -21,19 +22,15 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public LoginInputDTO UserSignUp(SignupDTO signupdto) {
+    public LoginInputDTO UserSignUp(@RequestBody SignupDTO signupdto) {
 
-        User user1=new User(signupdto.getPhone(),signupdto.getPassword(), signupdto.getEmail(), signupdto.getUserName());
+        User user1=new User();
 
-        //user1.get().setUserId(user.getUserId());
-/*
+
         user1.setUserName(signupdto.getUserName());
         user1.setEmail(signupdto.getEmail());
         user1.setPassword(signupdto.getPassword());
         user1.setPhone(signupdto.getPhone());
-
-
- */
 
         userRepository.save(user1);
 
