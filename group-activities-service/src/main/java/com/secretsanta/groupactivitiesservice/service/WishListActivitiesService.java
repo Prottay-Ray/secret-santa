@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Service
 public class WishListActivitiesService {
 
     @Autowired
@@ -35,9 +36,9 @@ public class WishListActivitiesService {
 
     @Autowired
     private CommunicatorService communicatorService;
-
-    @Autowired
-    private GroupEntity group;
+//
+//    @Autowired
+//    private GroupEntity group;
 
     public List<GroupEntity> participantofgroup(Long userId) {
         Optional<UserEntity> userEntity = userRepository.findById(userId);
