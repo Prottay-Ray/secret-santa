@@ -1,4 +1,4 @@
-package com.secretsanta.userauthenticationservice.controller;
+package com.secretsanta.groupactivitiesservice.controller;
 
 import com.secretsanta.userauthenticationservice.dto.LoginInputDTO;
 import com.secretsanta.userauthenticationservice.dto.SignupDTO;

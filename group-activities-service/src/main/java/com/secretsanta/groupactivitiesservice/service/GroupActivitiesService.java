@@ -199,4 +199,5 @@ public class GroupActivitiesService{
         return new UserCreatedDTO(Boolean.TRUE);
 
     }
+
 }

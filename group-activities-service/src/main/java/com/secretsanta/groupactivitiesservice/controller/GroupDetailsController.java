@@ -24,4 +24,6 @@ public class GroupDetailsController {
         GroupDisplayDTO displaygrp = groupDetailsService.getAllGrpDetails(grpId);
         return new ResponseEntity<>(displaygrp, HttpStatus.ACCEPTED);
     }
+
+
 }

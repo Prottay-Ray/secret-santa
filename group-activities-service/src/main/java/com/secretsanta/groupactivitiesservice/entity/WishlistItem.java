@@ -3,6 +3,7 @@ package com.secretsanta.groupactivitiesservice.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashMap;
 
 
 @Entity(name = "wishlistitems")
@@ -20,6 +21,7 @@ public class WishlistItem {
     private Double itemsPrice;
     private Boolean isGifted;
     private Integer Priority;
+
 
     @ManyToOne
     private GroupEntity group;
