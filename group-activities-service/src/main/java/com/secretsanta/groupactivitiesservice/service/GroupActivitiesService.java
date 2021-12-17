@@ -191,4 +191,12 @@ public class GroupActivitiesService{
 
         return new GiftReceivedDTO(user.getUserName(), list.get(0).getUser().getUserName(), sendList);
     }
+
+    public UserCreatedDTO createUser(UserDTO userDTO) {
+
+        UserEntity user = new UserEntity();
+        modelMapper.map(userDTO, user);
+        return new UserCreatedDTO(Boolean.TRUE);
+
+    }
 }

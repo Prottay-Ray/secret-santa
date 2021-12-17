@@ -46,4 +46,9 @@ public class GroupActivitiesController {
         return new ResponseEntity<>(groupActivitiesService.giftBestWay(groupId, santaId), HttpStatus.OK);
     }
 
+    //Create a user
+    @PostMapping("/group/create/user")
+    public ResponseEntity<UserCreatedDTO> createUser(@RequestBody UserDTO userDTO) {
+        return new ResponseEntity<>(groupActivitiesService.createUser(userDTO), HttpStatus.CREATED);
+    }
 }
