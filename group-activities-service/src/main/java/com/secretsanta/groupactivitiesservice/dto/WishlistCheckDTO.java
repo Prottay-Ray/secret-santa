@@ -1,4 +1,5 @@
 package com.secretsanta.groupactivitiesservice.dto;
+
 import lombok.*;
 
 @Data
@@ -6,9 +7,11 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WishlistDTO {
-    private Long wishListId;
+public class WishlistCheckDTO {
+
     private String itemsName;
     private Double itemsPrice;
     private Integer Priority;
+    private Boolean isGifted;
+
 }

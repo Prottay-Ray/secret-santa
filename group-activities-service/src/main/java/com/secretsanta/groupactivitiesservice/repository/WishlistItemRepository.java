@@ -16,4 +16,10 @@ public interface WishlistItemRepository extends JpaRepository <WishlistItem, Lon
 
    @Query("SELECT W FROM wishlistitems W WHERE W.Santa.userId = :santaId AND W.group.groupId = :groupId")
    List<WishlistItem> findWishlistItemsForSantaInGroup(@Param("santaId") Long santaId, @Param("groupId") Long groupId);
+
+   @Query("SELECT W FROM wishlistitems W WHERE W.Santa.userId = :userId AND W.group.groupId = :groupId")
+   List<WishlistItem> findGiftStatus(@Param("userId") Long userId, @Param("groupId") Long groupId);
+
+   @Query("SELECT W FROM wishlistitems W WHERE W.user.userId = :userId AND W.group.groupId = :groupId")
+   List<WishlistItem> findGiftStatusUser(@Param("userId") Long userId, @Param("groupId") Long groupId);
 }

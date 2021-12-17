@@ -176,16 +176,18 @@ public class GroupActivitiesService{
         GroupEntity group = checkGroup(groupId);    //The group of santa
 
         List<WishlistItem> list = group.getWishlist();
+        List<WishlistItem> list1 = new ArrayList<>();
 
         for (WishlistItem item :
                 list) {
             if (item.getSanta().equals(user)) {
                 item.setIsGifted(true);
                 wishlistItemRepository.save(item);
+                list1.add(item);
             }
         }
         
-        List<WishlistItemDTO> sendList = modelMapper.map(list, new TypeToken<List<WishlistItemDTO>>() {}.getType());
+        List<WishlistItemDTO> sendList = modelMapper.map(list1, new TypeToken<List<WishlistItemDTO>>() {}.getType());
 
         return new GiftReceivedDTO(user.getUserName(), list.get(0).getUser().getUserName(), sendList);
     }
