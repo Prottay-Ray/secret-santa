@@ -12,6 +12,7 @@ import com.secretsanta.groupactivitiesservice.repository.GroupRepository;
 import com.secretsanta.groupactivitiesservice.repository.UserEntityRepository;
 import com.secretsanta.groupactivitiesservice.repository.WishlistItemRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,7 +84,7 @@ public class WishListCreationService {
 
     public List<WishlistItemDTO> listsantasees(Long santaId, Long groupId) {
         List<WishlistItem> searchiftwo=wishlistItemRepository.findWishlistItemsForSantaInGroup(santaId,groupId);
-        List<WishlistItemDTO> wlistDTO=new ArrayList<>();
+        List<WishlistItemDTO> wlistDTO=modelMapper.map(searchiftwo, new TypeToken<List<WishlistItemDTO>>() {}.getType());
         modelMapper.map(searchiftwo,wlistDTO);
         return wlistDTO;
 

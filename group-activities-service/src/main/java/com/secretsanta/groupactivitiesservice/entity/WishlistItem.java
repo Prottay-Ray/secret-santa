@@ -17,9 +17,9 @@ public class WishlistItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishListId;
     private String itemsName;
-    private double itemsPrice;
+    private Double itemsPrice;
     private Boolean isGifted;
-    private int Priority;
+    private Integer Priority;
 
     @ManyToOne
     private GroupEntity group;
