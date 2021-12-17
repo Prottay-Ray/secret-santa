@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "groups")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,8 +38,8 @@ public class GroupEntity {
         return users.add(user);
     }
 
-    public Boolean addWishList(List<WishlistItem> list) {
-        return wishlist.addAll(list);
+    public Boolean addWishlistItem(WishlistItem item) {
+        return wishlist.add(item);
     }
 
     public void clearGroupObject() {

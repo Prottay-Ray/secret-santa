@@ -2,11 +2,13 @@ package com.secretsanta.groupactivitiesservice.service;
 
 import com.secretsanta.groupactivitiesservice.dto.GroupDisplayDTO;
 import com.secretsanta.groupactivitiesservice.dto.WishlistDTO;
+import com.secretsanta.groupactivitiesservice.dto.WishlistItemDTO;
 import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
 import com.secretsanta.groupactivitiesservice.entity.UserEntity;
 import com.secretsanta.groupactivitiesservice.entity.WishlistItem;
 import com.secretsanta.groupactivitiesservice.exception.GroupNotFoundException;
 import com.secretsanta.groupactivitiesservice.exception.UserDoesNotExistException;
+import com.secretsanta.groupactivitiesservice.repository.GroupRepository;
 import com.secretsanta.groupactivitiesservice.repository.UserEntityRepository;
 import com.secretsanta.groupactivitiesservice.repository.WishlistItemRepository;
 import org.modelmapper.ModelMapper;
@@ -26,6 +28,9 @@ public class WishListCreationService {
     @Autowired
     private UserEntityRepository userEntityRepository;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
 //    @Autowired
 //    private UserEntity user;
 
@@ -41,32 +46,44 @@ public class WishListCreationService {
     //name
     //price
     //owning table date should be saved there
-    public boolean createwishlistforuser(Long userId, List<WishlistDTO> wishlistDTO) {
+    public boolean createwishlistforuser(Long userId, Long groupId, List<WishlistItemDTO> wishlistDTO) {
         Optional<UserEntity> userdetails = userEntityRepository.findById(userId);
 
         if (userdetails.isEmpty()) {
             throw new UserDoesNotExistException("User doesn't exist");
-
         }
 
-        for (int i = 0; i < wishlistDTO.size(); i++) {
+        GroupEntity group;
+
+        group = groupRepository.findById(groupId).orElse(null);
+        if (group == null) throw new GroupNotFoundException("This group does not exist!");
+
+        for (WishlistItemDTO dto : wishlistDTO) {
             //convert the input dto to entity
             WishlistItem wl = new WishlistItem();
-            modelMapper.map(wishlistDTO.get(i), wl);
+            modelMapper.map(dto, wl);
+
+            //setting the group of the santa
+            wl.setGroup(group);
             //add user to entity
             wl.setUser(userdetails.get());
             //save the entity to wishlist repo
-
+            wl.setIsGifted(Boolean.FALSE);
+            wl.setPriority(dto.getPriority());
             wishlistItemRepository.save(wl);
+            userdetails.get().addWishlistItem(wl);
+            userEntityRepository.save(userdetails.get());
+            group.addWishlistItem(wl);
+            groupRepository.save(group);
         }
 
         return true;
     }
 
 
-    public List<WishlistDTO> listsantasees(Long santaId, Long groupId) {
-        List<WishlistItem> searchiftwo=wishlistItemRepository.findWishlistItemsBySantaUserIdEqualsAndGroup_GroupId(santaId,groupId);
-        List<WishlistDTO> wlistDTO=new ArrayList<>();
+    public List<WishlistItemDTO> listsantasees(Long santaId, Long groupId) {
+        List<WishlistItem> searchiftwo=wishlistItemRepository.findWishlistItemsForSantaInGroup(santaId,groupId);
+        List<WishlistItemDTO> wlistDTO=new ArrayList<>();
         modelMapper.map(searchiftwo,wlistDTO);
         return wlistDTO;
 

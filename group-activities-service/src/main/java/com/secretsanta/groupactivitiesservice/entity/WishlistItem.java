@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 
-@Entity
+@Entity(name = "wishlistitems")
 @Getter
 @Setter
 @NoArgsConstructor

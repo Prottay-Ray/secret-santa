@@ -6,7 +6,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class WishlistDTO {
     private Long wishListId;
     private String itemsName;

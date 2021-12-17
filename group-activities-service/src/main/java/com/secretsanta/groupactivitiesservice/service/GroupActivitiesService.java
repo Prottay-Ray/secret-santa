@@ -161,6 +161,7 @@ public class GroupActivitiesService{
         }
         for (WishlistItem wishlistItem : wishlistItems) {
             wishlistItem.setSanta(userMap.get(wishlistItem.getUser()));
+            wishlistItemRepository.save(wishlistItem);
         }
 
         return true;

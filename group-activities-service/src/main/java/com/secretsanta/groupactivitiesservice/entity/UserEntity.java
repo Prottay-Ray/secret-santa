@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-    @Entity
+    @Entity(name = "users")
     @Getter
     @Setter
     @NoArgsConstructor
@@ -33,8 +33,15 @@ import java.util.List;
         }
 
         public boolean removeGroup(GroupEntity group) {
-            groups.remove(group);
-            return true;
+            return groups.remove(group);
+        }
+
+        public boolean addWishlistItem(WishlistItem item) {
+            return wishlistitem.add(item);
+        }
+
+        public boolean removeWishlist(WishlistItem item) {
+            return wishlistitem.remove(item);
         }
      //public boolean addWishlist(WishlistDTO wishlist){return wishlistitem.add(wishlist);}
 }

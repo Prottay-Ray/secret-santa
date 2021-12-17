@@ -8,15 +8,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "*")
 public class WishListActivityController {
     @Autowired
     private WishListActivitiesService wishListActivitiesService;
 
+    // See all groups with which the user is attached
     @GetMapping("group/participant-of-group/{userId}")
-    public ResponseEntity<GroupEntity> participantofgroup(@PathVariable Long userId){
-        return new ResponseEntity<GroupEntity>((GroupEntity) wishListActivitiesService.participantofgroup(userId), HttpStatus.OK);
+    public ResponseEntity<List<GroupEntity>> participantofgroup(@PathVariable Long userId){
+        return new ResponseEntity<>(wishListActivitiesService.participantofgroup(userId), HttpStatus.OK);
     }
 
     @GetMapping("group/is-gifted/{userId}")
