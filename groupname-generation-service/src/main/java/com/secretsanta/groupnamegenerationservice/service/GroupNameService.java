@@ -1,9 +1,6 @@
 package com.secretsanta.groupnamegenerationservice.service;
 
-import com.secretsanta.groupnamegenerationservice.dto.AssignNameInputDTO;
-import com.secretsanta.groupnamegenerationservice.dto.AssignNameOutputDTO;
-import com.secretsanta.groupnamegenerationservice.dto.NameAvailableOutputDTO;
-import com.secretsanta.groupnamegenerationservice.dto.RandomGroupNameDTO;
+import com.secretsanta.groupnamegenerationservice.dto.*;
 import com.secretsanta.groupnamegenerationservice.entity.GroupName;
 import com.secretsanta.groupnamegenerationservice.repository.GroupNameRepository;
 import org.apache.commons.lang.RandomStringUtils;
@@ -94,6 +91,16 @@ public class GroupNameService {
         }
 
         return new NameAvailableOutputDTO(available, inList, index, groupId);
+
+    }
+
+    public ReleaseNameOutputDTO releaseGroupName(AssignNameInputDTO nameInputDTO) {
+
+        String nameInput = nameInputDTO.getGroupName();
+        List<GroupName> g = groupNameRepository.findByGroupNameEquals(nameInput);
+        g.get(0).setIsTaken(false);
+        groupNameRepository.save(g.get(0));
+        return new ReleaseNameOutputDTO(true);
 
     }
 }

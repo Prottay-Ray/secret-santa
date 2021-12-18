@@ -1,9 +1,6 @@
 package com.secretsanta.groupnamegenerationservice.controller;
 
-import com.secretsanta.groupnamegenerationservice.dto.AssignNameInputDTO;
-import com.secretsanta.groupnamegenerationservice.dto.AssignNameOutputDTO;
-import com.secretsanta.groupnamegenerationservice.dto.NameAvailableOutputDTO;
-import com.secretsanta.groupnamegenerationservice.dto.RandomGroupNameDTO;
+import com.secretsanta.groupnamegenerationservice.dto.*;
 import com.secretsanta.groupnamegenerationservice.service.GroupNameService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +33,11 @@ public class GroupNameController {
     @PostMapping("/groupname/assign")
     public ResponseEntity<AssignNameOutputDTO> assignGroupName(@RequestBody AssignNameInputDTO nameInputDTO) {
         return new ResponseEntity<>(groupNameService.assignGroupName(nameInputDTO), HttpStatus.CREATED);
+    }
+
+    //releases a group id if it is not taken
+    @PostMapping("/groupname/release")
+    public ResponseEntity<ReleaseNameOutputDTO> releaseGroupName(@RequestBody AssignNameInputDTO nameInputDTO) {
+        return new ResponseEntity<>(groupNameService.releaseGroupName(nameInputDTO), HttpStatus.CREATED);
     }
 }

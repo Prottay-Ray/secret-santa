@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class GroupNotFoundException extends RuntimeException{
+public class UserCreationFailedException extends RuntimeException{
 
-    public GroupNotFoundException(String message) {
+    public UserCreationFailedException(String message) {
         super(message);
     }
 }
