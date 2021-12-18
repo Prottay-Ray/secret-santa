@@ -70,7 +70,7 @@ public class WishListCreationService {
             wl.setUser(userdetails.get());
             //save the entity to wishlist repo
             wl.setIsGifted(Boolean.FALSE);
-            wl.setPriority(wl.getPriority());
+            wl.setPriority(dto.getPriority());
             wishlistItemRepository.save(wl);
             userdetails.get().addWishlistItem(wl);
             userEntityRepository.save(userdetails.get());

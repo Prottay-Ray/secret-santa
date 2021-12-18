@@ -84,6 +84,8 @@ public class GroupActivitiesService{
         // map the details from dto to group object
         modelMapper.map(groupCreationDTO, group);
 
+        if(!communicatorService.assignGroupName(userId, groupCreationDTO.getGroupName()))
+            throw new GroupNameUnavailableException("This group name is already taken!");
         // Add user to the group and set the deadlines
         group.addUser(user);
         group.setBudgetDeadline(toDate(groupCreationDTO.getBudgetDeadline()));
@@ -110,6 +112,7 @@ public class GroupActivitiesService{
                     users) {
                 user.removeGroup(groupEntity.get());
             }
+            communicatorService.releaseGroupName(groupEntity.get().getGroupName());
             groupRepository.delete(groupEntity.get());
             return "Group Deleted Successfully!";
         } catch (Exception e) {
@@ -196,6 +199,7 @@ public class GroupActivitiesService{
 
         UserEntity user = new UserEntity();
         modelMapper.map(userDTO, user);
+        userRepository.save(user);
         return new UserCreatedDTO(Boolean.TRUE);
 
     }

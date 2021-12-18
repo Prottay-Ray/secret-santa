@@ -11,7 +11,7 @@ public class WishlistCheckDTO {
 
     private String itemsName;
     private Double itemsPrice;
-    private Integer Priority;
+    private Integer priority;
     private Boolean isGifted;
 
 }

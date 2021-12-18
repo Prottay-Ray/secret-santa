@@ -7,10 +7,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class WishlistItemDTO {
+public class AssignNameOutputDTO {
 
-    private String itemsName;
-    private Double itemsPrice;
-    private Integer priority;
+    private Boolean isAssigned;
 
 }

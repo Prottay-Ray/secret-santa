@@ -2,16 +2,16 @@ package com.secretsanta.userauthenticationservice.dto;
 
 import lombok.*;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class SignupDTO {
 
+public class SignEmailDTO {
     private String password;
     private String userName;
-    private Long phone;
-    private String email;
 
+    private String email;
 }

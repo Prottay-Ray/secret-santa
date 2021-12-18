@@ -20,7 +20,7 @@ public class WishlistItem {
     private String itemsName;
     private Double itemsPrice;
     private Boolean isGifted;
-    private Integer Priority;
+    private Integer priority;
 
 
     @ManyToOne

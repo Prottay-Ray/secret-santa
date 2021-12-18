@@ -1,8 +1,6 @@
-package com.secretsanta.userauthenticationservice.dto;
+package com.secretsanta.groupactivitiesservice.dto;
 
 import lombok.*;
-
-import javax.persistence.Column;
 
 @Getter
 @Setter
