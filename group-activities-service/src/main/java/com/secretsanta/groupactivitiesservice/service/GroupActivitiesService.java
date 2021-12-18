@@ -196,6 +196,7 @@ public class GroupActivitiesService{
 
         UserEntity user = new UserEntity();
         modelMapper.map(userDTO, user);
+        userRepository.save(user);
         return new UserCreatedDTO(Boolean.TRUE);
 
     }

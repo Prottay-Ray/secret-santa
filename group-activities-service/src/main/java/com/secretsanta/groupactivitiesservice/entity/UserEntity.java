@@ -19,7 +19,7 @@ import java.util.List;
 
         @Id
         private long userId;
-        private String UserName;
+        private String userName;
 
         @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
         private List<WishlistItem> wishlistitem = new ArrayList<>();
