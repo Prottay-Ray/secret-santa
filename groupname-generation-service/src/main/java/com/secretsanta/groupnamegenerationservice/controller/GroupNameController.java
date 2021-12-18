@@ -20,16 +20,19 @@ public class GroupNameController {
     @Autowired
     private GroupNameService groupNameService;
 
+    //Sends a random generated not taken groupname from list
     @GetMapping("/groupname/generate/random")
     public ResponseEntity<RandomGroupNameDTO> getGroupName() {
         return new ResponseEntity<>(groupNameService.getGroupName(), HttpStatus.OK);
     }
 
+    //Checks if our groupname is unique or taken
     @PostMapping("/groupname/check")
     public ResponseEntity<NameAvailableOutputDTO> checkName(@RequestBody RandomGroupNameDTO groupNameDTO) {
         return new ResponseEntity<>(groupNameService.checkName(groupNameDTO), HttpStatus.FOUND);
     }
 
+    //Assigns a group id if it is not taken
     @PostMapping("/groupname/assign")
     public ResponseEntity<AssignNameOutputDTO> assignGroupName(@RequestBody AssignNameInputDTO nameInputDTO) {
         return new ResponseEntity<>(groupNameService.assignGroupName(nameInputDTO), HttpStatus.CREATED);

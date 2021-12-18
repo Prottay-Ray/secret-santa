@@ -29,15 +29,17 @@ public class GroupNameService {
 
 
     public void generateNames() {
-        List<GroupName> l = groupNameRepository.findAllByIsTakenEquals(false).subList(0, 100);
-        if (l.size() > 0) groupNames.addAll(l);
+
+        List<GroupName> l = groupNameRepository.findAllByIsTakenEquals(false);
+        if (l.size() > 0 && l.size() <= 100) groupNames.addAll(l);
+        else if(l.size() > 0) l = l.subList(0, 100);
         for (int i = 0; i < 100-l.size(); i++) {
             String s = RandomStringUtils.random(20, true, true);
             if (groupNameRepository.findByGroupNameEquals(s).size() == 0) {
                 GroupName groupName = new GroupName();
                 groupName.setGroupName(s);
                 groupName.setIsTaken(false);
-
+                groupNames.add(groupName);
             }
         }
     }
