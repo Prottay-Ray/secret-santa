@@ -16,18 +16,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    //Mapping to enable user to sign up
     @PostMapping("/user-signup")
-            //make request body dto with everything other that userid
-    public LoginInputDTO userSignUp(@RequestBody SignupDTO signup) throws JSONException {
+    public LoginInputDTO userSignUp(@RequestBody SignupDTO signup) throws Exception {
         return userService.userSignUp(signup);
     }
 
+    //Mapping to enable user to sign in using email
     @PostMapping("/user-signin/email")
     public LoginInputDTO userSignEmail(@RequestBody SignEmailDTO signEmailDTO){
         return userService.userSignEmail(signEmailDTO);
     }
 
-
+    //Mapping to enable user to sign in using username
     @PostMapping("/user-signin/username")
     public LoginInputDTO userSignUserName(@RequestBody SignEmailDTO signEmailDTO){
         return userService.userSignUserName(signEmailDTO);

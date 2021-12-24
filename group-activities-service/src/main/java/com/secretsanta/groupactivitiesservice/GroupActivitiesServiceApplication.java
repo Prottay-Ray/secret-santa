@@ -1,7 +1,7 @@
 package com.secretsanta.groupactivitiesservice;
 
 import com.secretsanta.groupactivitiesservice.entity.GroupEntity;
-import com.secretsanta.groupactivitiesservice.service.CommunicatorService;
+import com.secretsanta.groupactivitiesservice.service.CommunicatorServiceImpl1;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,8 +19,8 @@ public class GroupActivitiesServiceApplication {
 	}
 
 	@Bean
-	public CommunicatorService communicate() {
-		return new CommunicatorService();
+	public CommunicatorServiceImpl1 communicate() {
+		return new CommunicatorServiceImpl1();
 	}
 
 	@Bean

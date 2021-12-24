@@ -22,7 +22,7 @@ public class GroupActivitiesController {
         return new ResponseEntity<>(groupCreationDTO1, HttpStatus.CREATED);
     }
 
-    //Delete a group
+    //Delete a group by groupId
     @DeleteMapping("/group/{groupId}")
     public ResponseEntity<String> deleteGroup(@PathVariable Long groupId) {
         return new ResponseEntity<>(groupActivitiesService.deleteGroup(groupId), HttpStatus.OK);
@@ -46,7 +46,7 @@ public class GroupActivitiesController {
         return new ResponseEntity<>(groupActivitiesService.giftBestWay(groupId, santaId), HttpStatus.OK);
     }
 
-    //Create a user
+    //Create a user by User Auth microservice
     @PostMapping("/group/create/user")
     public ResponseEntity<UserCreatedDTO> createUser(@RequestBody UserDTO userDTO) {
         return new ResponseEntity<>(groupActivitiesService.createUser(userDTO), HttpStatus.CREATED);
