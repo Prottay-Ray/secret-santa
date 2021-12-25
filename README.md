@@ -39,6 +39,29 @@ Spring Boot Backend Application
 * The user would be able to check whether its ‘Santa’ has gifted it or not.
 
 
+## REST API Contracts
+
+METHOD | ROUTE | DESCRIPTION 
+------------|-----|------------
+POST | /user-signup | Mapping to enable user to sign up.
+POST | /user-signin/email | Mapping to enable user to sign in using email.
+POST | /user-signin/username | Mapping to enable user to sign in using username.
+POST | /group/create/{userId} | Mapping to enable user to create a group.
+DELETE | /group/{groupId} | Mapping to delete a group.
+PUT | /group/join/{userId} | Mapping to enable user to join a group.
+POST | /group/assign-santa/{groupId} | Mapping by which system gets a random and different santa assigned to all users.
+GET | /group/{groupId}/santa/{santaId}/gift | Mapping by which Santa gifts in a group.
+POST | /group/create/user | Mapping to enable user-auth microservice to register user in group-activities microservice.
+GET | /group/details/{groupId} | Mapping to get details of a group.
+GET | group/participant-of-group/{userId} | Mapping to enable user to see all groups with which the user is attached.
+PUT | group/is-gifted/user/{userId}/group/{groupId} | Mapping to enable User/Santa to check if it got/given the gift.
+POST | /group/wishlist/{userId}/group/{groupId} | Mapping to enable User to submit its wishlist of gifts.
+GET | /group/wishlist/{userId}/{groupId} | Mapping to enable Santa to check the wishlist of the gift recipent.
+GET | /groupname/generate/random | Mapping to get a random groupname which is unique or untaken by any other group.
+POST | /groupname/check | Mapping to check whether a group name is taken or not.
+POST | /groupname/assign | Mapping to check whether a group name is untaken and assign it to a new group.
+POST | /groupname/release | Mapping to a group name after a group is deleted and mark it as not taken.
+
 
 ## Developed by
 
