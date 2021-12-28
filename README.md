@@ -67,5 +67,5 @@ POST | /groupname/release | Mapping to a group name after a group is deleted and
 
 
 * Prottay Ray
-* Caryn D'Souza
+* Caryn Dsouza
 * Gautam Ankit Singh
