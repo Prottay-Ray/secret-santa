@@ -14,7 +14,9 @@ Spring Boot Backend Application
 
 * Java 
 * Spring Boot
-* Netflix Eureka
+* Eureka Server
+* Eureka Client
+* REST API
 
 
 ## Features
